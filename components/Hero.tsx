@@ -94,17 +94,22 @@ export default function Hero() {
 
     const oneSetWidth = track.scrollWidth / 2;
 
+    gsap.set(track, { willChange: "transform", force3D: true });
     tweenRef.current = gsap.fromTo(
       track,
       { x: 0 },
       { x: -oneSetWidth, duration: 28, ease: "none", repeat: -1 }
     );
 
+    // Pause on hover (desktop only, not touch)
     const container = track.parentElement;
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
     const pause = () => tweenRef.current?.pause();
     const resume = () => tweenRef.current?.play();
-    container?.addEventListener("mouseenter", pause);
-    container?.addEventListener("mouseleave", resume);
+    if (!isTouchDevice) {
+      container?.addEventListener("mouseenter", pause);
+      container?.addEventListener("mouseleave", resume);
+    }
 
     const onResize = () => {
       tweenRef.current?.kill();
@@ -120,8 +125,10 @@ export default function Hero() {
 
     return () => {
       tweenRef.current?.kill();
-      container?.removeEventListener("mouseenter", pause);
-      container?.removeEventListener("mouseleave", resume);
+      if (!isTouchDevice) {
+        container?.removeEventListener("mouseenter", pause);
+        container?.removeEventListener("mouseleave", resume);
+      }
       window.removeEventListener("resize", onResize);
     };
   }, []);
@@ -144,9 +151,15 @@ export default function Hero() {
         <h1
           ref={headingRef}
           aria-label={HEADING}
-          className="text-[#252525] text-[48px] md:text-[64px] xl:text-[96px] tracking-[-1.44px] md:tracking-[-1.92px] xl:tracking-[-2.88px] leading-[0.95] xl:max-w-[1062px]"
+          className="relative text-[#252525] text-[48px] md:text-[64px] xl:text-[96px] tracking-[-1.44px] md:tracking-[-1.92px] xl:tracking-[-2.88px] leading-[0.95] xl:max-w-[1062px]"
         >
-          <span aria-hidden>
+          {/* Invisible full text to reserve height */}
+          <span className="invisible" aria-hidden>
+            Designing things people actually{" "}
+            <span className="font-semibold">want to use.</span>
+          </span>
+          {/* Typed text overlaid on top */}
+          <span className="absolute inset-0" aria-hidden>
             {HEADING.slice(0, Math.min(typed, BOLD_AT))}
             {typed > BOLD_AT && (
               <span className="font-semibold">
@@ -165,7 +178,7 @@ export default function Hero() {
       </div>
 
       {/* Infinite marquee carousel */}
-      <div ref={carouselRef} className="w-full overflow-hidden">
+      <div ref={carouselRef} className="w-full overflow-hidden pointer-events-none md:pointer-events-auto">
         <div ref={trackRef} className="flex w-max">
           {LOOPED.map((card, i) => (
             <div key={i} className="mr-[32px] shrink-0">
