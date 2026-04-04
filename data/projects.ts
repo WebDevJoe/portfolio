@@ -1,0 +1,342 @@
+// ── Types ──
+
+export interface ProjectMeta {
+  slug: string;
+  category: "Game UI/UX" | "Product Design";
+  role: string;
+  title: string;
+  description: string;
+  cardImage: string;
+  outcome: string;
+  timeline: string;
+  tools: string[];
+  team: string;
+}
+
+export interface OverviewItem {
+  label: string;
+  text: string;
+}
+
+// ── Content blocks (discriminated union) ──
+
+export interface TextBlock {
+  type: "text";
+  heading?: string;
+  body: string;
+}
+
+export interface ImageBlock {
+  type: "image";
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+export interface FullWidthImageBlock {
+  type: "full-width-image";
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+export interface ImageGridBlock {
+  type: "image-grid";
+  images: { src: string; alt: string; caption?: string }[];
+  columns?: 2 | 3;
+}
+
+export interface BeforeAfterBlock {
+  type: "before-after";
+  before: { src: string; alt: string; label?: string };
+  after: { src: string; alt: string; label?: string };
+}
+
+export interface CalloutBlock {
+  type: "callout";
+  text: string;
+}
+
+export interface MetricsBlock {
+  type: "metrics";
+  items: { value: string; label: string }[];
+}
+
+export type SectionBlock =
+  | TextBlock
+  | ImageBlock
+  | FullWidthImageBlock
+  | ImageGridBlock
+  | BeforeAfterBlock
+  | CalloutBlock
+  | MetricsBlock;
+
+export interface CaseStudySection {
+  id: string;
+  title: string;
+  blocks: SectionBlock[];
+}
+
+export interface Project {
+  meta: ProjectMeta;
+  heroImage: string;
+  overview: OverviewItem[];
+  sections: CaseStudySection[];
+  reflection: string;
+}
+
+// ── Placeholder data ──
+
+const placeholderImage = "https://www.figma.com/api/mcp/asset/48cb6f2e-cc55-4976-9e9c-33fbde381b59";
+const placeholderImage2 = "https://www.figma.com/api/mcp/asset/9a641b40-d704-4a70-8a2b-9c6d491170ff";
+
+export const projects: Project[] = [
+  {
+    meta: {
+      slug: "ecommerce-redesign",
+      category: "Product Design",
+      role: "Lead UI/UX Designer",
+      title: "E-Commerce Platform Redesign",
+      description: "Complete overhaul of a retail platform, focusing on user journey optimization and conversion rate improvements through intuitive design patterns.",
+      cardImage: placeholderImage,
+      outcome: "Increased conversion rate by 34%",
+      timeline: "Jan – Apr 2025",
+      tools: ["Figma", "FigJam", "Maze", "Hotjar"],
+      team: "2 Designers, 4 Engineers, 1 PM",
+    },
+    heroImage: placeholderImage,
+    overview: [
+      { label: "Challenge", text: "Users were abandoning carts at a 72% rate due to a confusing checkout flow and lack of trust signals." },
+      { label: "Solution", text: "Simplified the checkout to 3 steps, added progress indicators, and introduced social proof throughout the funnel." },
+      { label: "Impact", text: "34% increase in conversion rate, 28% reduction in cart abandonment within 60 days of launch." },
+      { label: "My Role", text: "Led end-to-end design from research through handoff. Conducted user interviews and usability testing." },
+    ],
+    sections: [
+      {
+        id: "problem",
+        title: "The Problem",
+        blocks: [
+          { type: "text", body: "The existing checkout experience was built incrementally over 3 years without a cohesive design strategy. Users faced a 7-step checkout process with no clear progress indication, leading to confusion and drop-off at every stage." },
+          { type: "full-width-image", src: placeholderImage, alt: "Analytics showing drop-off points in the checkout funnel", caption: "Heatmap data revealed users struggling with the payment form layout" },
+          { type: "callout", text: "\"I got to the payment page and wasn't sure if my items were still in the cart.\" — User interview participant" },
+        ],
+      },
+      {
+        id: "research",
+        title: "Research & Discovery",
+        blocks: [
+          { type: "text", body: "I conducted 12 user interviews, analyzed 3 months of Hotjar session recordings, and performed a competitive audit of 8 leading e-commerce platforms. Three key themes emerged: users wanted visibility into their order at all times, trust signals before entering payment info, and the ability to edit their cart without losing progress." },
+          { type: "image-grid", columns: 3, images: [
+            { src: placeholderImage, alt: "Affinity mapping session", caption: "Affinity mapping" },
+            { src: placeholderImage2, alt: "User journey map", caption: "Journey map" },
+            { src: placeholderImage, alt: "Competitive analysis", caption: "Competitive audit" },
+          ]},
+          { type: "metrics", items: [
+            { value: "12", label: "User interviews" },
+            { value: "200+", label: "Sessions analyzed" },
+            { value: "8", label: "Competitors audited" },
+          ]},
+        ],
+      },
+      {
+        id: "process",
+        title: "Design Process",
+        blocks: [
+          { type: "text", body: "Starting with low-fidelity wireframes, I explored multiple checkout flow patterns. The key insight was that a persistent order summary sidebar reduced anxiety and kept users oriented throughout the process." },
+          { type: "before-after", before: { src: placeholderImage, alt: "Original 7-step checkout", label: "Before: 7 steps" }, after: { src: placeholderImage2, alt: "Redesigned 3-step checkout", label: "After: 3 steps" } },
+          { type: "text", heading: "Iteration & Testing", body: "I ran 3 rounds of usability testing with 5 participants each. The first iteration revealed that users still missed the progress indicator — I increased its visual weight and added step labels. The second iteration showed a 90% task completion rate." },
+          { type: "image", src: placeholderImage2, alt: "Wireframe iterations showing the evolution of the checkout flow", caption: "Wireframe iterations — from exploration to final direction" },
+        ],
+      },
+      {
+        id: "solution",
+        title: "Final Solution",
+        blocks: [
+          { type: "text", body: "The final design features a streamlined 3-step checkout with a persistent order summary, inline validation, trust badges, and a guest checkout option. Every decision was backed by user research and testing data." },
+          { type: "full-width-image", src: placeholderImage2, alt: "Final checkout design across devices", caption: "Responsive checkout experience across desktop, tablet, and mobile" },
+          { type: "image-grid", columns: 2, images: [
+            { src: placeholderImage, alt: "Step 1: Shipping details", caption: "Shipping details with address autocomplete" },
+            { src: placeholderImage2, alt: "Step 2: Payment", caption: "Payment with trust signals and saved methods" },
+          ]},
+        ],
+      },
+      {
+        id: "results",
+        title: "Results",
+        blocks: [
+          { type: "metrics", items: [
+            { value: "+34%", label: "Conversion rate" },
+            { value: "-28%", label: "Cart abandonment" },
+            { value: "4.6/5", label: "User satisfaction" },
+            { value: "< 2min", label: "Avg. checkout time" },
+          ]},
+          { type: "text", body: "Within 60 days of launch, the redesigned checkout flow delivered measurable improvements across all key metrics. Customer support tickets related to checkout dropped by 45%, and the NPS score for the purchase experience increased from 32 to 58." },
+        ],
+      },
+    ],
+    reflection: "If I could do this project again, I would have involved engineering earlier in the ideation phase. Some of my initial concepts required custom payment integrations that weren't feasible within the timeline. Earlier collaboration would have surfaced these constraints sooner and saved a week of design iteration.",
+  },
+  {
+    meta: {
+      slug: "mobile-game-hud",
+      category: "Game UI/UX",
+      role: "Lead UI/UX Designer",
+      title: "Mobile Game HUD Redesign",
+      description: "Redesigned the in-game HUD for a mobile RPG, improving player readability and reducing accidental inputs during combat.",
+      cardImage: placeholderImage2,
+      outcome: "Reduced accidental inputs by 61%",
+      timeline: "Mar – Jun 2025",
+      tools: ["Figma", "Unity", "PlaytestCloud", "Miro"],
+      team: "1 Designer, 3 Engineers, 1 Game Director",
+    },
+    heroImage: placeholderImage2,
+    overview: [
+      { label: "Challenge", text: "Players reported frustration with accidental ability activations and poor health bar visibility during intense combat sequences." },
+      { label: "Solution", text: "Redesigned the HUD layout with larger touch targets, contextual ability grouping, and a high-contrast health system." },
+      { label: "Impact", text: "61% reduction in accidental inputs and 23% improvement in player retention at the 7-day mark." },
+      { label: "My Role", text: "Sole designer. Ran playtests, designed all UI assets, and worked directly with Unity engineers on implementation." },
+    ],
+    sections: [
+      {
+        id: "problem",
+        title: "The Problem",
+        blocks: [
+          { type: "text", body: "The existing HUD was designed for tablet and scaled down for phones without adaptation. Touch targets were too small, abilities were grouped alphabetically instead of by combat context, and the health bar used a thin gradient that was nearly invisible during bright combat effects." },
+          { type: "full-width-image", src: placeholderImage2, alt: "Original HUD with highlighted problem areas" },
+          { type: "callout", text: "\"I keep hitting the wrong ability in the middle of boss fights and it costs me the run.\" — Player review, App Store" },
+        ],
+      },
+      {
+        id: "research",
+        title: "Research & Discovery",
+        blocks: [
+          { type: "text", body: "I analyzed 500+ player reviews mentioning UI issues, ran 8 moderated playtests with screen recording, and benchmarked 6 top-performing mobile RPGs. The data showed that 73% of accidental inputs happened during abilities that were adjacent to the movement controls." },
+          { type: "image-grid", columns: 2, images: [
+            { src: placeholderImage, alt: "Heatmap of touch inputs during combat", caption: "Touch heatmap analysis" },
+            { src: placeholderImage2, alt: "Competitive UI comparison", caption: "Competitive benchmarking" },
+          ]},
+        ],
+      },
+      {
+        id: "process",
+        title: "Design Process",
+        blocks: [
+          { type: "text", body: "I created 4 HUD layout variations and tested each with 5 players. The winning layout separated offensive abilities from defensive ones, placing them on opposite sides of the screen. Health bars were redesigned with a dual-layer system: a thick colored bar with a numeric overlay." },
+          { type: "before-after", before: { src: placeholderImage, alt: "Original cramped HUD", label: "Before" }, after: { src: placeholderImage2, alt: "Redesigned spacious HUD", label: "After" } },
+        ],
+      },
+      {
+        id: "solution",
+        title: "Final Solution",
+        blocks: [
+          { type: "text", body: "The final HUD features context-aware ability grouping, 44px minimum touch targets (up from 28px), a high-contrast health system visible over any background, and a cooldown visualization that doesn't rely solely on color." },
+          { type: "full-width-image", src: placeholderImage, alt: "Final HUD design in-game", caption: "Final HUD in live gameplay — note the spatial separation of ability groups" },
+        ],
+      },
+      {
+        id: "results",
+        title: "Results",
+        blocks: [
+          { type: "metrics", items: [
+            { value: "-61%", label: "Accidental inputs" },
+            { value: "+23%", label: "Day-7 retention" },
+            { value: "+0.4★", label: "App Store rating" },
+          ]},
+          { type: "text", body: "Post-launch analytics showed a dramatic drop in accidental ability activations. Player sentiment in reviews shifted from UI complaints to gameplay praise. The App Store rating climbed from 3.8 to 4.2 within the first month." },
+        ],
+      },
+    ],
+    reflection: "This project reinforced the importance of designing for the worst-case scenario — in this case, fast-paced combat with screen effects. What looks clean in a static mockup can fall apart in context. I now always test UI with the most chaotic gameplay footage I can find.",
+  },
+  {
+    meta: {
+      slug: "saas-dashboard",
+      category: "Product Design",
+      role: "Product Designer",
+      title: "SaaS Dashboard Redesign",
+      description: "Redesigned the core dashboard experience to reduce cognitive load and improve task completion rates across the platform.",
+      cardImage: placeholderImage2,
+      outcome: "Task completion rate up 41%",
+      timeline: "Sep – Dec 2024",
+      tools: ["Figma", "Amplitude", "Loom", "Linear"],
+      team: "2 Designers, 6 Engineers, 2 PMs",
+    },
+    heroImage: placeholderImage,
+    overview: [
+      { label: "Challenge", text: "The dashboard had grown organically over 4 years, resulting in information overload and low feature discoverability." },
+      { label: "Solution", text: "Introduced a role-based dashboard with progressive disclosure, customizable widgets, and contextual onboarding." },
+      { label: "Impact", text: "41% improvement in task completion rate, 35% reduction in time-to-first-action for new users." },
+      { label: "My Role", text: "Co-led design with one other designer. Owned the information architecture and interaction design." },
+    ],
+    sections: [
+      {
+        id: "problem",
+        title: "The Problem",
+        blocks: [
+          { type: "text", body: "Users were presented with 23 widgets on first login, regardless of their role or goals. Power users had learned to ignore irrelevant sections, but new users were overwhelmed and churned within the first week at a 40% rate." },
+          { type: "full-width-image", src: placeholderImage, alt: "Original dashboard with all 23 widgets visible", caption: "The original dashboard — every widget visible to every user" },
+        ],
+      },
+      {
+        id: "research",
+        title: "Research & Discovery",
+        blocks: [
+          { type: "text", body: "Working with the data team, I segmented users into 4 personas based on actual feature usage patterns in Amplitude. I then conducted 15 interviews across these segments to understand their mental models and daily workflows." },
+          { type: "image-grid", columns: 2, images: [
+            { src: placeholderImage2, alt: "User persona cards", caption: "Data-driven personas" },
+            { src: placeholderImage, alt: "Feature usage heatmap by role", caption: "Feature usage by segment" },
+          ]},
+        ],
+      },
+      {
+        id: "process",
+        title: "Design Process",
+        blocks: [
+          { type: "text", body: "I designed a role-based default layout system where each persona sees the 5-7 most relevant widgets on first login, with the ability to customize. Progressive disclosure patterns let users expand into advanced features without being overwhelmed upfront." },
+          { type: "before-after", before: { src: placeholderImage, alt: "Cluttered original dashboard", label: "Before: 23 widgets" }, after: { src: placeholderImage2, alt: "Clean role-based dashboard", label: "After: 6 default widgets" } },
+          { type: "text", heading: "Onboarding Flow", body: "A contextual onboarding system guides new users through their first 3 key actions based on their role, eliminating the need for a separate tutorial." },
+        ],
+      },
+      {
+        id: "solution",
+        title: "Final Solution",
+        blocks: [
+          { type: "text", body: "The redesigned dashboard adapts to user roles, surfaces actionable insights first, and grows with the user's expertise. A customization panel lets power users build their ideal workspace without affecting the clean defaults." },
+          { type: "full-width-image", src: placeholderImage2, alt: "Final dashboard designs for different user roles" },
+        ],
+      },
+      {
+        id: "results",
+        title: "Results",
+        blocks: [
+          { type: "metrics", items: [
+            { value: "+41%", label: "Task completion" },
+            { value: "-35%", label: "Time to first action" },
+            { value: "-52%", label: "First-week churn" },
+            { value: "+18", label: "NPS increase" },
+          ]},
+          { type: "text", body: "The role-based approach proved that showing less could achieve more. New user activation improved dramatically, and existing users reported feeling like the product finally 'understood' their workflow." },
+        ],
+      },
+    ],
+    reflection: "The biggest lesson was that 'customizable' shouldn't mean 'figure it out yourself.' Smart defaults based on real usage data are worth more than infinite flexibility. I'd also invest more time in the widget API design — the engineering handoff for custom widget layouts was more complex than anticipated.",
+  },
+];
+
+// ── Helpers ──
+
+export function getProjectBySlug(slug: string): Project | undefined {
+  return projects.find((p) => p.meta.slug === slug);
+}
+
+export function getAllSlugs(): string[] {
+  return projects.map((p) => p.meta.slug);
+}
+
+export function getAdjacentProjects(slug: string): { prev: ProjectMeta | null; next: ProjectMeta | null } {
+  const idx = projects.findIndex((p) => p.meta.slug === slug);
+  return {
+    prev: idx > 0 ? projects[idx - 1].meta : null,
+    next: idx < projects.length - 1 ? projects[idx + 1].meta : null,
+  };
+}
