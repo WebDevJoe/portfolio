@@ -5,7 +5,6 @@ import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 
 const heroCardImage = "https://www.figma.com/api/mcp/asset/ec014d28-49c3-4ac7-846d-c33b8cd564b2";
-const ellipseGreen  = "https://www.figma.com/api/mcp/asset/fc7a0541-3dbb-4099-a7dc-c3d922301542";
 const ellipseDot    = "https://www.figma.com/api/mcp/asset/92ad979c-e24e-406b-80c2-bb6873fb7dc3";
 
 const CARDS = [
@@ -55,8 +54,6 @@ const HEADING = "Designing things people actually want to use.";
 const BOLD_AT = "Designing things people actually ".length;
 
 export default function Hero() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const tweenRef = useRef<gsap.core.Tween | null>(null);
   const chipRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const subtextRef = useRef<HTMLParagraphElement>(null);
@@ -87,51 +84,6 @@ export default function Hero() {
     const id = setTimeout(() => setTyped((n) => n + 1), 38);
     return () => clearTimeout(id);
   }, [typed, startTyping]);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    const oneSetWidth = track.scrollWidth / 2;
-
-    gsap.set(track, { willChange: "transform", force3D: true });
-    tweenRef.current = gsap.fromTo(
-      track,
-      { x: 0 },
-      { x: -oneSetWidth, duration: 28, ease: "none", repeat: -1 }
-    );
-
-    // Pause on hover (desktop only, not touch)
-    const container = track.parentElement;
-    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-    const pause = () => tweenRef.current?.pause();
-    const resume = () => tweenRef.current?.play();
-    if (!isTouchDevice) {
-      container?.addEventListener("mouseenter", pause);
-      container?.addEventListener("mouseleave", resume);
-    }
-
-    const onResize = () => {
-      tweenRef.current?.kill();
-      gsap.set(track, { x: 0 });
-      const newWidth = track.scrollWidth / 2;
-      tweenRef.current = gsap.fromTo(
-        track,
-        { x: 0 },
-        { x: -newWidth, duration: 28, ease: "none", repeat: -1 }
-      );
-    };
-    window.addEventListener("resize", onResize);
-
-    return () => {
-      tweenRef.current?.kill();
-      if (!isTouchDevice) {
-        container?.removeEventListener("mouseenter", pause);
-        container?.removeEventListener("mouseleave", resume);
-      }
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
 
   return (
     <section className="flex flex-col gap-[40px] xl:gap-[64px] items-center justify-center py-[48px] xl:p-[64px] w-full">
@@ -177,9 +129,9 @@ export default function Hero() {
         </p>
       </div>
 
-      {/* Infinite marquee carousel */}
+      {/* Infinite marquee carousel — pure CSS animation (compositor thread, scroll-proof) */}
       <div ref={carouselRef} className="w-full overflow-hidden pointer-events-none md:pointer-events-auto">
-        <div ref={trackRef} className="flex w-max">
+        <div className="carousel-track flex w-max will-change-transform">
           {LOOPED.map((card, i) => (
             <div key={i} className="mr-[32px] shrink-0">
               <HeroCard image={card.image} grey={card.grey} />
