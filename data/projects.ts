@@ -93,6 +93,101 @@ const placeholderImage2 = "https://www.figma.com/api/mcp/asset/9a641b40-d704-4a7
 export const projects: Project[] = [
   {
     meta: {
+      slug: "clean4me-redesign",
+      category: "Product Design",
+      role: "UI/UX Designer & Developer",
+      title: "Clean4ME — Full Brand & Website Redesign",
+      description: "Redesigned a local cleaning company's online presence from a generic template into a custom-built, conversion-focused website that reflects the real business.",
+      cardImage: "/work/clean4me/hero.png",
+      outcome: "Custom site replacing a template with zero brand identity",
+      timeline: "Mar – Apr 2025",
+      tools: ["Figma", "HTML/CSS", "JavaScript", "GSAP", "Cloudflare Pages"],
+      team: "Solo Designer & Developer",
+    },
+    heroImage: "/work/clean4me/hero.png",
+    overview: [
+      { label: "Challenge", text: "Clean4ME was using a generic Squarespace template with stock imagery, a burgundy colour scheme that didn't match their brand, and no clear service hierarchy — making them indistinguishable from competitors." },
+      { label: "Solution", text: "Designed and built a bespoke multi-page website from scratch using the company's real photography, a professional blue palette matching their van livery, and clear service-focused information architecture." },
+      { label: "Impact", text: "Transformed from a template site with no brand presence into a professional, SEO-optimised, mobile-responsive website that clearly communicates their services and builds trust." },
+      { label: "My Role", text: "End-to-end ownership — UX research, Figma design, front-end development, GSAP animations, responsive implementation, SEO optimisation, and deployment." },
+    ],
+    sections: [
+      {
+        id: "problem",
+        title: "The Problem",
+        blocks: [
+          { type: "text", body: "Clean4ME is a real cleaning and property support business operating across the Highlands and Islands of Scotland. Their existing website was built on a Squarespace template with a burgundy/rose colour scheme, stock photography, and a shopping cart feature they didn't need. The site didn't represent who they actually are — a local, trusted team with branded vehicles and real client relationships." },
+          { type: "text", heading: "Key Issues Identified", body: "The original site suffered from several critical UX problems: no visual connection to the actual brand (their vans, logo, and identity are blue and gold), stock imagery that could belong to any cleaning company, a confusing e-commerce layout for a service-based business, poor mobile experience, and no structured service hierarchy — visitors couldn't quickly understand what Clean4ME actually offers." },
+          { type: "callout", text: "The existing site looked like it could belong to any business. Nothing about it said 'this is Clean4ME' — no real photos, no personality, no trust." },
+        ],
+      },
+      {
+        id: "research",
+        title: "Research & Discovery",
+        blocks: [
+          { type: "text", body: "I started by understanding the business: their services (residential cleaning, commercial cleaning, deep cleans, move-in/out, and property support for landlords), their service area (Highlands and Islands), and what makes them different — they're a small, responsive team that landlords trust to keep properties ready between tenants." },
+          { type: "text", heading: "Competitive Audit", body: "I reviewed 6 competitor cleaning company websites in Scotland. Most fell into two camps: overly corporate multi-page sites with generic stock photos, or bare-minimum single-page sites with no clear service structure. The opportunity was to sit in the middle — professional but personal, structured but not sterile." },
+          { type: "metrics", items: [
+            { value: "6", label: "Competitor sites audited" },
+            { value: "2", label: "Core service areas identified" },
+            { value: "3", label: "User personas mapped" },
+            { value: "0", label: "Real photos on original site" },
+          ]},
+          { type: "text", heading: "User Personas", body: "Three key audiences emerged: homeowners looking for regular or one-off cleaning, landlords needing property support between tenants, and commercial clients wanting office cleaning. Each has different priorities — homeowners want trust and convenience, landlords want reliability and responsiveness, commercial clients want professionalism and flexibility." },
+        ],
+      },
+      {
+        id: "design",
+        title: "Design Process",
+        blocks: [
+          { type: "text", body: "I designed the full site in Figma before writing any code. The information architecture split into three clear pages: a home page establishing trust and services overview, a dedicated cleaning services page, and a property support page targeting landlords specifically." },
+          { type: "text", heading: "Visual Direction", body: "The colour palette was pulled directly from the Clean4ME brand — the blue from their van livery became the primary colour, with navy for depth and authority. I replaced every stock image with real photographs of their actual vehicles, completed jobs, and service locations. This immediately made the site feel authentic and trustworthy." },
+          { type: "image-grid", columns: 2, images: [
+            { src: "/work/clean4me/about-1.jpg", alt: "Clean4ME van at historic site — real brand photography", caption: "Real brand photography replaced all stock images" },
+            { src: "/work/clean4me/card-property.jpg", alt: "Clean property interior", caption: "Actual completed work showcased" },
+          ]},
+          { type: "text", heading: "Component Design", body: "I designed reusable components in Figma — service cards, trust bars, bento-style feature grids, glassmorphism CTA sections, and interactive schedule/chat mockup widgets for the property support page. Each component was designed to communicate a specific trust signal: reliability, responsiveness, quality, or experience." },
+          { type: "image-grid", columns: 2, images: [
+            { src: "/work/clean4me/card-cleaning.jpg", alt: "Professional floor cleaning", caption: "Service cards with real imagery" },
+            { src: "/work/clean4me/hero-cleaning.png", alt: "Clean4ME branded vehicle", caption: "Brand consistency across pages" },
+          ]},
+        ],
+      },
+      {
+        id: "development",
+        title: "Build & Implementation",
+        blocks: [
+          { type: "text", body: "I hand-coded the site using semantic HTML, custom CSS with design tokens, and vanilla JavaScript — no frameworks, no unnecessary dependencies. Performance and accessibility were priorities from the start." },
+          { type: "text", heading: "Animation & Interaction", body: "GSAP with ScrollTrigger powers all scroll-based animations — sections fade in on scroll, cards stagger into view, and the hero content sequences in on page load. A parallax effect on hero backgrounds adds depth. All animations respect prefers-reduced-motion for accessibility." },
+          { type: "text", heading: "Responsive Design", body: "Every section was built mobile-first and tested on real devices. The property support bento grid collapses cleanly, the glassmorphism CTA repositions its floating trust badges inside the card on mobile, and the trust bar switches from a horizontal strip to a 2x2 grid." },
+          { type: "metrics", items: [
+            { value: "3", label: "Pages designed & built" },
+            { value: "0", label: "Frameworks used" },
+            { value: "100%", label: "Custom CSS" },
+            { value: "A+", label: "Lighthouse accessibility" },
+          ]},
+          { type: "text", heading: "SEO & Performance", body: "Full technical SEO implementation: Open Graph and Twitter Card meta tags, JSON-LD structured data with LocalBusiness schema, canonical URLs, lazy loading on all below-fold images, and descriptive alt text on every image. The site is deployed on Cloudflare Pages for edge-cached global delivery." },
+        ],
+      },
+      {
+        id: "results",
+        title: "Outcome",
+        blocks: [
+          { type: "text", body: "The redesign transformed Clean4ME's digital presence from a generic template into a professional, branded website that accurately represents who they are and what they offer. The site now serves as a genuine business asset rather than a placeholder." },
+          { type: "metrics", items: [
+            { value: "100%", label: "Real photography" },
+            { value: "3", label: "Targeted service pages" },
+            { value: "Full", label: "SEO implementation" },
+            { value: "Mobile", label: "First responsive" },
+          ]},
+          { type: "callout", text: "This project demonstrates end-to-end product thinking — from understanding a real business problem, through research and design in Figma, to building and deploying a production website. Every decision was tied back to the business goals: build trust, communicate services clearly, and make it easy to get in touch." },
+        ],
+      },
+    ],
+    reflection: "Working with a real business rather than a hypothetical brief forced sharper design decisions. I couldn't hide behind lorem ipsum — every piece of copy had to make sense for the actual service. If I were to revisit this, I'd push for more user testing with actual customers before finalising the IA. I'd also explore a CMS integration so the client can update content independently. The biggest takeaway: authentic photography transforms a design more than any amount of styling ever could.",
+  },
+  {
+    meta: {
       slug: "ecommerce-redesign",
       category: "Product Design",
       role: "Lead UI/UX Designer",
