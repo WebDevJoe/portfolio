@@ -62,6 +62,20 @@ export interface MetricsBlock {
   items: { value: string; label: string }[];
 }
 
+export interface PersonaBlock {
+  type: "personas";
+  personas: {
+    name: string;
+    age: string;
+    role: string;
+    emoji: string;
+    bio: string;
+    goals: string[];
+    frustrations: string[];
+    quote: string;
+  }[];
+}
+
 export type SectionBlock =
   | TextBlock
   | ImageBlock
@@ -69,7 +83,8 @@ export type SectionBlock =
   | ImageGridBlock
   | BeforeAfterBlock
   | CalloutBlock
-  | MetricsBlock;
+  | MetricsBlock
+  | PersonaBlock;
 
 export interface CaseStudySection {
   id: string;
@@ -96,7 +111,7 @@ export const projects: Project[] = [
       slug: "clean4me-redesign",
       category: "Product Design",
       role: "UI/UX Designer & Developer",
-      title: "Clean4ME — Full Brand & Website Redesign",
+      title: "Clean4ME — Website Redesign",
       description: "Replacing a generic template with a custom-built, trust-focused website for a real cleaning business — designed in Figma, built with modern tools, and deployed to production.",
       cardImage: "/work/clean4me/hero.png",
       outcome: "Replacing a template with zero brand identity",
@@ -133,7 +148,39 @@ export const projects: Project[] = [
             { value: "2", label: "Core service areas" },
             { value: "0", label: "Real photos on original" },
           ]},
-          { type: "text", body: "Three user personas emerged: homeowners wanting trust and convenience, landlords needing reliability between tenants, and commercial clients wanting professionalism and flexibility. Each shaped different parts of the design." },
+          { type: "text", body: "Three user personas emerged, each shaping different parts of the design:" },
+          { type: "personas", personas: [
+            {
+              name: "Fiona",
+              age: "42",
+              role: "Homeowner",
+              emoji: "🏠",
+              bio: "Busy mum of two in Elgin. Works part-time and wants her home cleaned regularly without having to think about it.",
+              goals: ["Find a cleaner she can trust with a house key", "Consistent quality without having to check up", "Easy booking, no back-and-forth"],
+              frustrations: ["Previous cleaners were unreliable", "Can't tell from most websites if they're professional", "Stock photos make every company look the same"],
+              quote: "I just want someone I can rely on to show up and do a proper job.",
+            },
+            {
+              name: "David",
+              age: "55",
+              role: "Landlord — 3 Properties",
+              emoji: "🔑",
+              bio: "Owns three rental properties across the Highlands. Needs someone to handle changeovers and keep properties ready between tenants.",
+              goals: ["Fast turnaround between tenants", "One point of contact for cleans and checks", "Responsive when something comes up last minute"],
+              frustrations: ["Current cleaners don't answer out of hours", "No way to see if a job's been done properly", "Tired of coordinating multiple contractors"],
+              quote: "I need someone who treats my properties like I would — and picks up the phone.",
+            },
+            {
+              name: "Mark",
+              age: "38",
+              role: "Office Manager",
+              emoji: "🏢",
+              bio: "Manages a small accountancy firm in Inverness. Needs reliable office cleaning that works around business hours.",
+              goals: ["Clean workspace for client meetings", "Evening or weekend cleaning so it doesn't disrupt work", "Professional appearance for the office"],
+              frustrations: ["Last cleaner left supplies out during client visits", "Hard to find commercial cleaners outside the central belt", "Most websites don't clearly list commercial services"],
+              quote: "Clients walk in and the office needs to look sharp. That's non-negotiable.",
+            },
+          ]},
         ],
       },
       {
@@ -340,6 +387,150 @@ export const projects: Project[] = [
       },
     ],
     reflection: "This project reinforced the importance of designing for the worst-case scenario — in this case, fast-paced combat with screen effects. What looks clean in a static mockup can fall apart in context. I now always test UI with the most chaotic gameplay footage I can find.",
+  },
+  {
+    meta: {
+      slug: "strategy-game-ui",
+      category: "Game UI/UX",
+      role: "UI/UX Designer",
+      title: "Strategy Game — Command Interface",
+      description: "Designed a real-time strategy game command interface that lets players manage complex unit compositions without pausing gameplay.",
+      cardImage: placeholderImage,
+      outcome: "Average actions-per-minute up 28%",
+      timeline: "Jun – Sep 2024",
+      tools: ["Figma", "Unreal Engine", "Miro", "PlaytestCloud"],
+      team: "1 Designer, 5 Engineers, 1 Creative Director",
+    },
+    heroImage: placeholderImage,
+    overview: [
+      { label: "Challenge", text: "Players managing 50+ units needed to issue commands quickly without losing situational awareness or pausing the game." },
+      { label: "Solution", text: "A radial command wheel with contextual grouping, quick-cast hotkeys, and a minimal HUD that surfaces only relevant info per unit type." },
+      { label: "Impact", text: "28% increase in average APM, 40% fewer mis-commands in playtests, and players reported feeling 'in control' for the first time." },
+      { label: "My Role", text: "Led UI/UX design. Ran playtests, designed the radial menu system, and iterated based on input heatmaps and player feedback." },
+    ],
+    sections: [
+      {
+        id: "problem",
+        title: "The Problem",
+        blocks: [
+          { type: "text", body: "The existing command system used nested dropdown menus that required 3-4 clicks per action. In a real-time game where milliseconds matter, players were either pausing constantly or making errors because the UI couldn't keep up with their intent." },
+          { type: "callout", text: "\"By the time I find the right command in the menu, my units are already dead.\" — Playtest participant" },
+        ],
+      },
+      {
+        id: "research",
+        title: "Research & Discovery",
+        blocks: [
+          { type: "text", body: "I analysed input telemetry from 2,000 play sessions, identifying that 80% of all commands came from just 6 actions. The remaining 20% were situational and could be contextually surfaced. I also benchmarked radial menus in 5 competitive RTS titles." },
+          { type: "metrics", items: [
+            { value: "2,000", label: "Sessions analysed" },
+            { value: "80%", label: "Commands from 6 actions" },
+            { value: "5", label: "RTS titles benchmarked" },
+          ]},
+        ],
+      },
+      {
+        id: "process",
+        title: "Design Process",
+        blocks: [
+          { type: "text", body: "The radial wheel puts the 6 core commands at thumb-distance from the cursor. Context-aware segments appear based on unit type — infantry see different options than vehicles. I tested 3 radial layouts with 8 players each, measuring command speed and error rate." },
+          { type: "before-after", before: { src: placeholderImage, alt: "Original nested dropdown menu", label: "Before: Nested menus" }, after: { src: placeholderImage2, alt: "Radial command wheel", label: "After: Radial wheel" } },
+        ],
+      },
+      {
+        id: "solution",
+        title: "Final Solution",
+        blocks: [
+          { type: "text", body: "The final system combines a radial wheel for mouse users, quick-cast hotkeys for keyboard players, and a minimal unit-type HUD that only shows relevant stats. The result feels fast, fluid, and intuitive regardless of input method." },
+          { type: "full-width-image", src: placeholderImage2, alt: "Final command interface in gameplay" },
+        ],
+      },
+      {
+        id: "results",
+        title: "Results",
+        blocks: [
+          { type: "metrics", items: [
+            { value: "+28%", label: "Actions per minute" },
+            { value: "-40%", label: "Mis-commands" },
+            { value: "92%", label: "Preferred new UI" },
+          ]},
+          { type: "text", body: "Post-implementation playtests showed players executing strategies faster and with more confidence. The most telling metric: players stopped pausing the game to issue commands." },
+        ],
+      },
+    ],
+    reflection: "Radial menus are deceptively hard to get right — the angle, segment size, and dead zone all affect usability dramatically. The breakthrough was context-aware segments that reduce cognitive load by only showing what's relevant to the selected unit type.",
+  },
+  {
+    meta: {
+      slug: "inventory-system",
+      category: "Game UI/UX",
+      role: "UI/UX Designer",
+      title: "RPG Inventory System Redesign",
+      description: "Redesigned a cluttered RPG inventory into a clean, visual system that makes item management feel like part of the gameplay, not a chore.",
+      cardImage: placeholderImage2,
+      outcome: "Time spent in inventory reduced by 35%",
+      timeline: "Oct – Dec 2024",
+      tools: ["Figma", "Unity", "Maze", "Miro"],
+      team: "1 Designer, 3 Engineers, 1 Game Director",
+    },
+    heroImage: placeholderImage2,
+    overview: [
+      { label: "Challenge", text: "Players spent an average of 22% of total play time in the inventory screen, reporting it felt like 'homework' rather than part of the game." },
+      { label: "Solution", text: "A visual, drag-and-drop inventory with smart sorting, equipment preview, and contextual item comparison — designed to feel tactile and fast." },
+      { label: "Impact", text: "35% reduction in time spent managing inventory. Players described the new system as 'satisfying' rather than 'necessary'." },
+      { label: "My Role", text: "Sole designer. Conducted player interviews, designed all UI, and collaborated with engineers on drag-and-drop implementation." },
+    ],
+    sections: [
+      {
+        id: "problem",
+        title: "The Problem",
+        blocks: [
+          { type: "text", body: "The original inventory was a text-heavy spreadsheet-style list. Players couldn't quickly compare items, had no visual preview of equipment, and sorting required multiple menu interactions. The result: players avoided looting entirely or spent frustrating minutes managing gear after every encounter." },
+          { type: "callout", text: "\"I dread opening my inventory. It kills the flow every time.\" — Player survey response" },
+        ],
+      },
+      {
+        id: "research",
+        title: "Research & Discovery",
+        blocks: [
+          { type: "text", body: "I surveyed 150 active players and ran 6 moderated sessions watching people manage their inventory in real time. The data showed three core pain points: no visual hierarchy between item rarities, no quick-compare for equipment, and a sort system that reset every time the inventory was closed." },
+          { type: "metrics", items: [
+            { value: "150", label: "Players surveyed" },
+            { value: "6", label: "Moderated sessions" },
+            { value: "22%", label: "Play time in inventory" },
+          ]},
+        ],
+      },
+      {
+        id: "process",
+        title: "Design Process",
+        blocks: [
+          { type: "text", body: "I moved from a list view to a grid with visual item cards. Each card shows the item icon, rarity border colour, and key stat at a glance. Hovering triggers an inline comparison panel against currently equipped gear. Drag-and-drop sorting with persistent preferences completed the picture." },
+          { type: "before-after", before: { src: placeholderImage, alt: "Original text-list inventory", label: "Before: Text list" }, after: { src: placeholderImage2, alt: "Visual grid inventory", label: "After: Visual grid" } },
+        ],
+      },
+      {
+        id: "solution",
+        title: "Final Solution",
+        blocks: [
+          { type: "text", body: "The final inventory features a responsive grid layout, colour-coded rarity borders, one-tap equip, side-by-side stat comparison, and smart auto-sort that remembers player preferences. The character model updates in real-time as gear is equipped." },
+          { type: "full-width-image", src: placeholderImage, alt: "Final inventory design with equipment preview" },
+        ],
+      },
+      {
+        id: "results",
+        title: "Results",
+        blocks: [
+          { type: "metrics", items: [
+            { value: "-35%", label: "Time in inventory" },
+            { value: "+47%", label: "Items looted per session" },
+            { value: "4.5/5", label: "Satisfaction rating" },
+          ]},
+          { type: "text", body: "Players started engaging with loot again. The looting rate per session jumped 47% because managing items was no longer a punishment. Multiple players described the new inventory as 'one of the best parts of the game'." },
+        ],
+      },
+    ],
+    reflection: "The biggest insight was that inventory management is gameplay, not a break from it. When you treat it as a design problem worth solving — with the same care you'd give combat or movement — players notice and engage. I'd love to explore haptic feedback on mobile for the drag-and-drop interactions next.",
   },
   {
     meta: {

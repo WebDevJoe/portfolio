@@ -113,7 +113,7 @@ export default function Work() {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-[26px] py-[16px] rounded-[100px] text-[16px] font-medium leading-[0.9] whitespace-nowrap transition-colors ${
+              className={`px-[26px] py-[16px] rounded-[100px] text-[16px] font-medium leading-[0.9] whitespace-nowrap transition-colors cursor-pointer ${
                 activeTab === tab ? "bg-[#0072d0] text-white" : "text-[#0e5188] hover:bg-white/30"
               }`}
             >

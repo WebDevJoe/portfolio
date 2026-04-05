@@ -6,6 +6,7 @@ import ImageGrid from "./blocks/ImageGrid";
 import BeforeAfter from "./blocks/BeforeAfter";
 import CalloutBlock from "./blocks/CalloutBlock";
 import MetricsBlock from "./blocks/MetricsBlock";
+import PersonaBlock from "./blocks/PersonaBlock";
 
 function BlockRenderer({ block }: { block: SectionType["blocks"][number] }) {
   switch (block.type) {
@@ -16,6 +17,7 @@ function BlockRenderer({ block }: { block: SectionType["blocks"][number] }) {
     case "before-after":  return <BeforeAfter {...block} />;
     case "callout":       return <CalloutBlock {...block} />;
     case "metrics":       return <MetricsBlock {...block} />;
+    case "personas":      return <PersonaBlock {...block} />;
   }
 }
 
